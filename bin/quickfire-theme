@@ -1,0 +1,419 @@
+#!/usr/bin/env bash
+# quickfire-theme — Interchangeable Live Theme Switcher for LLM Quickfire Panel, Kitty & XFCE
+set -euo pipefail
+
+THEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/quickfire/themes"
+ROFI_THEME_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/quickfire-theme.rasi"
+KITTY_THEME_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/kitty/quickfire-colors.conf"
+CURRENT_THEME_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/quickfire/current_theme"
+
+mkdir -p "$THEMES_DIR" "$(dirname "$ROFI_THEME_FILE")" "$(dirname "$KITTY_THEME_FILE")"
+
+declare -A THEME_NAMES=(
+    ["catppuccin-mocha"]="Catppuccin Mocha Mauve (Deep Velvet & Lavender)"
+    ["ps2-cyber-blue"]="PlayStation 2 Cyber Blue (Midnight Navy & Neon Cyan)"
+    ["tokyo-night"]="Tokyo Night Storm (Deep Indigo & Electric Magenta)"
+    ["nord-frost"]="Nord Frost (Polar Night & Glacial Ice)"
+    ["dracula"]="Dracula Dark (Vampire Slate & Neon Pink)"
+    ["cyberpunk-2077"]="Cyberpunk Neon (Night Obsidian & Acid Yellow)"
+    ["synthwave-84"]="Synthwave 84 (Retro Neon Purple & Sunset Amber)"
+)
+
+# Apply a specific theme by key
+apply_theme() {
+    local theme="$1"
+    echo "$theme" > "$CURRENT_THEME_FILE"
+
+    case "$theme" in
+        ps2-cyber-blue)
+            # PS2 Cyber Blue: Midnight Navy (#00091a), Electric Cyan (#00f0ff), Neon Blue (#1a75ff), Gold (#ffd700)
+            cat << 'EOF' > "$ROFI_THEME_FILE"
+* {
+    bg-col:  #00091ae8;
+    bg-col-light: #071630;
+    border-col: #00f0ff;
+    selected-col: #0b2550;
+    blue: #00f0ff;
+    fg-col: #e6f3ff;
+    fg-col2: #ffd700;
+    grey: #4d7a9e;
+    highlight: bold #00f0ff;
+    width: 760;
+    font: "JetBrainsMono Nerd Font 11";
+}
+element-text, element-icon { background-color: inherit; text-color: inherit; }
+window {
+    height: 520px;
+    border: 2px;
+    border-color: @border-col;
+    border-radius: 12px;
+    background-color: @bg-col;
+    padding: 18px;
+}
+mainbox { background-color: transparent; }
+inputbar {
+    children: [prompt,entry];
+    background-color: @bg-col-light;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 0px 0px 14px 0px;
+    border: 1px;
+    border-color: @blue;
+}
+prompt { background-color: transparent; padding: 0px 10px 0px 0px; text-color: @fg-col2; font: "JetBrainsMono Nerd Font Bold 11"; }
+entry { background-color: transparent; text-color: @fg-col; placeholder: "Type a command or ask LLM directly..."; placeholder-color: @grey; }
+listview { background-color: transparent; columns: 1; lines: 12; spacing: 4px; }
+element { padding: 8px 12px; background-color: transparent; text-color: @fg-col; border-radius: 6px; }
+element selected { background-color: @selected-col; text-color: @blue; border: 1px; border-color: @blue; }
+EOF
+            cat << 'EOF' > "$KITTY_THEME_FILE"
+# PS2 Cyber Blue Palette
+background #00091a
+foreground #e6f3ff
+selection_background #0b2550
+selection_foreground #00f0ff
+cursor #00f0ff
+color0 #00091a
+color8 #4d7a9e
+color1 #ff3366
+color9 #ff5588
+color2 #00e676
+color10 #33ff99
+color3 #ffd700
+color11 #ffe066
+color4 #00b4d8
+color12 #00f0ff
+color5 #9d4edd
+color13 #c77dff
+color6 #00f0ff
+color14 #80f7ff
+color7 #e6f3ff
+color15 #ffffff
+EOF
+            ;;
+        tokyo-night)
+            cat << 'EOF' > "$ROFI_THEME_FILE"
+* {
+    bg-col:  #1a1b26ea;
+    bg-col-light: #24283b;
+    border-col: #7aa2f7;
+    selected-col: #2e3440;
+    blue: #7aa2f7;
+    fg-col: #c0caf5;
+    fg-col2: #bb9af7;
+    grey: #565f89;
+    highlight: bold #7aa2f7;
+    width: 760;
+    font: "JetBrainsMono Nerd Font 11";
+}
+element-text, element-icon { background-color: inherit; text-color: inherit; }
+window { height: 520px; border: 2px; border-color: @border-col; border-radius: 12px; background-color: @bg-col; padding: 18px; }
+mainbox { background-color: transparent; }
+inputbar { children: [prompt,entry]; background-color: @bg-col-light; border-radius: 8px; padding: 10px 14px; margin: 0px 0px 14px 0px; border: 1px; border-color: @blue; }
+prompt { background-color: transparent; padding: 0px 10px 0px 0px; text-color: @fg-col2; font: "JetBrainsMono Nerd Font Bold 11"; }
+entry { background-color: transparent; text-color: @fg-col; placeholder: "Type a command or ask LLM directly..."; placeholder-color: @grey; }
+listview { background-color: transparent; columns: 1; lines: 12; spacing: 4px; }
+element { padding: 8px 12px; background-color: transparent; text-color: @fg-col; border-radius: 6px; }
+element selected { background-color: @selected-col; text-color: @blue; border: 1px; border-color: @blue; }
+EOF
+            cat << 'EOF' > "$KITTY_THEME_FILE"
+background #1a1b26
+foreground #c0caf5
+selection_background #283457
+selection_foreground #c0caf5
+cursor #c0caf5
+color0 #15161e
+color8 #414868
+color1 #f7768e
+color9 #f7768e
+color2 #9ece6a
+color10 #9ece6a
+color3 #e0af68
+color11 #e0af68
+color4 #7aa2f7
+color12 #7aa2f7
+color5 #bb9af7
+color13 #bb9af7
+color6 #7dcfff
+color14 #7dcfff
+color7 #a9b1d6
+color15 #c0caf5
+EOF
+            ;;
+        nord-frost)
+            cat << 'EOF' > "$ROFI_THEME_FILE"
+* {
+    bg-col:  #2e3440ea;
+    bg-col-light: #3b4252;
+    border-col: #88c0d0;
+    selected-col: #434c5e;
+    blue: #88c0d0;
+    fg-col: #eceff4;
+    fg-col2: #81a1c1;
+    grey: #4c566a;
+    highlight: bold #88c0d0;
+    width: 760;
+    font: "JetBrainsMono Nerd Font 11";
+}
+element-text, element-icon { background-color: inherit; text-color: inherit; }
+window { height: 520px; border: 2px; border-color: @border-col; border-radius: 12px; background-color: @bg-col; padding: 18px; }
+mainbox { background-color: transparent; }
+inputbar { children: [prompt,entry]; background-color: @bg-col-light; border-radius: 8px; padding: 10px 14px; margin: 0px 0px 14px 0px; border: 1px; border-color: @blue; }
+prompt { background-color: transparent; padding: 0px 10px 0px 0px; text-color: @fg-col2; font: "JetBrainsMono Nerd Font Bold 11"; }
+entry { background-color: transparent; text-color: @fg-col; placeholder: "Type a command or ask LLM directly..."; placeholder-color: @grey; }
+listview { background-color: transparent; columns: 1; lines: 12; spacing: 4px; }
+element { padding: 8px 12px; background-color: transparent; text-color: @fg-col; border-radius: 6px; }
+element selected { background-color: @selected-col; text-color: @blue; border: 1px; border-color: @blue; }
+EOF
+            cat << 'EOF' > "$KITTY_THEME_FILE"
+background #2e3440
+foreground #eceff4
+selection_background #434c5e
+selection_foreground #eceff4
+cursor #d8dee9
+color0 #3b4252
+color8 #4c566a
+color1 #bf616a
+color9 #bf616a
+color2 #a3be8c
+color10 #a3be8c
+color3 #ebcb8b
+color11 #ebcb8b
+color4 #81a1c1
+color12 #81a1c1
+color5 #b48ead
+color13 #b48ead
+color6 #88c0d0
+color14 #8fbcbb
+color7 #e5e9f0
+color15 #eceff4
+EOF
+            ;;
+        dracula)
+            cat << 'EOF' > "$ROFI_THEME_FILE"
+* {
+    bg-col:  #282a36ea;
+    bg-col-light: #44475a;
+    border-col: #bd93f9;
+    selected-col: #44475a;
+    blue: #bd93f9;
+    fg-col: #f8f8f2;
+    fg-col2: #ff79c6;
+    grey: #6272a4;
+    highlight: bold #ff79c6;
+    width: 760;
+    font: "JetBrainsMono Nerd Font 11";
+}
+element-text, element-icon { background-color: inherit; text-color: inherit; }
+window { height: 520px; border: 2px; border-color: @border-col; border-radius: 12px; background-color: @bg-col; padding: 18px; }
+mainbox { background-color: transparent; }
+inputbar { children: [prompt,entry]; background-color: @bg-col-light; border-radius: 8px; padding: 10px 14px; margin: 0px 0px 14px 0px; border: 1px; border-color: @blue; }
+prompt { background-color: transparent; padding: 0px 10px 0px 0px; text-color: @fg-col2; font: "JetBrainsMono Nerd Font Bold 11"; }
+entry { background-color: transparent; text-color: @fg-col; placeholder: "Type a command or ask LLM directly..."; placeholder-color: @grey; }
+listview { background-color: transparent; columns: 1; lines: 12; spacing: 4px; }
+element { padding: 8px 12px; background-color: transparent; text-color: @fg-col; border-radius: 6px; }
+element selected { background-color: @selected-col; text-color: @fg-col2; border: 1px; border-color: @blue; }
+EOF
+            cat << 'EOF' > "$KITTY_THEME_FILE"
+background #282a36
+foreground #f8f8f2
+selection_background #44475a
+selection_foreground #f8f8f2
+cursor #f8f8f2
+color0 #000000
+color8 #4d4d4d
+color1 #ff5555
+color9 #ff6e6e
+color2 #50fa7b
+color10 #69ff94
+color3 #f1fa8c
+color11 #ffffa5
+color4 #bd93f9
+color12 #d6acff
+color5 #ff79c6
+color13 #ff92df
+color6 #8be9fd
+color14 #a4ffff
+color7 #bfbfbf
+color15 #ffffff
+EOF
+            ;;
+        cyberpunk-2077)
+            cat << 'EOF' > "$ROFI_THEME_FILE"
+* {
+    bg-col:  #08080cea;
+    bg-col-light: #12131f;
+    border-col: #fee801;
+    selected-col: #1a1b2d;
+    blue: #00f0ff;
+    fg-col: #eef2f7;
+    fg-col2: #fee801;
+    grey: #484b6a;
+    highlight: bold #fee801;
+    width: 760;
+    font: "JetBrainsMono Nerd Font 11";
+}
+element-text, element-icon { background-color: inherit; text-color: inherit; }
+window { height: 520px; border: 2px; border-color: @border-col; border-radius: 12px; background-color: @bg-col; padding: 18px; }
+mainbox { background-color: transparent; }
+inputbar { children: [prompt,entry]; background-color: @bg-col-light; border-radius: 8px; padding: 10px 14px; margin: 0px 0px 14px 0px; border: 1px; border-color: @border-col; }
+prompt { background-color: transparent; padding: 0px 10px 0px 0px; text-color: @fg-col2; font: "JetBrainsMono Nerd Font Bold 11"; }
+entry { background-color: transparent; text-color: @fg-col; placeholder: "Type a command or ask LLM directly..."; placeholder-color: @grey; }
+listview { background-color: transparent; columns: 1; lines: 12; spacing: 4px; }
+element { padding: 8px 12px; background-color: transparent; text-color: @fg-col; border-radius: 6px; }
+element selected { background-color: @selected-col; text-color: @fg-col2; border: 1px; border-color: @blue; }
+EOF
+            cat << 'EOF' > "$KITTY_THEME_FILE"
+background #08080c
+foreground #eef2f7
+selection_background #1a1b2d
+selection_foreground #fee801
+cursor #fee801
+color0 #08080c
+color8 #484b6a
+color1 #ff0055
+color9 #ff3377
+color2 #00ff9f
+color10 #33ffb2
+color3 #fee801
+color11 #fff04d
+color4 #00f0ff
+color12 #4df4ff
+color5 #ff00a0
+color13 #ff4db8
+color6 #00f0ff
+color14 #80f7ff
+color7 #eef2f7
+color15 #ffffff
+EOF
+            ;;
+        synthwave-84)
+            cat << 'EOF' > "$ROFI_THEME_FILE"
+* {
+    bg-col:  #241b2fea;
+    bg-col-light: #2c223b;
+    border-col: #ff7edb;
+    selected-col: #372a4b;
+    blue: #36f9f6;
+    fg-col: #f92aad;
+    fg-col2: #ff7edb;
+    grey: #614d79;
+    highlight: bold #36f9f6;
+    width: 760;
+    font: "JetBrainsMono Nerd Font 11";
+}
+element-text, element-icon { background-color: inherit; text-color: inherit; }
+window { height: 520px; border: 2px; border-color: @border-col; border-radius: 12px; background-color: @bg-col; padding: 18px; }
+mainbox { background-color: transparent; }
+inputbar { children: [prompt,entry]; background-color: @bg-col-light; border-radius: 8px; padding: 10px 14px; margin: 0px 0px 14px 0px; border: 1px; border-color: @border-col; }
+prompt { background-color: transparent; padding: 0px 10px 0px 0px; text-color: @fg-col2; font: "JetBrainsMono Nerd Font Bold 11"; }
+entry { background-color: transparent; text-color: @fg-col; placeholder: "Type a command or ask LLM directly..."; placeholder-color: @grey; }
+listview { background-color: transparent; columns: 1; lines: 12; spacing: 4px; }
+element { padding: 8px 12px; background-color: transparent; text-color: @fg-col; border-radius: 6px; }
+element selected { background-color: @selected-col; text-color: @blue; border: 1px; border-color: @blue; }
+EOF
+            cat << 'EOF' > "$KITTY_THEME_FILE"
+background #241b2f
+foreground #f92aad
+selection_background #372a4b
+selection_foreground #36f9f6
+cursor #36f9f6
+color0 #241b2f
+color8 #614d79
+color1 #fe4450
+color9 #ff6b75
+color2 #72f1b8
+color10 #97f5cb
+color3 #fede5d
+color11 #ffe585
+color4 #03edf9
+color12 #36f9f6
+color5 #ff7edb
+color13 #ff9ce4
+color6 #03edf9
+color14 #78f3f8
+color7 #ffffff
+color15 #ffffff
+EOF
+            ;;
+        catppuccin-mocha|*)
+            cat << 'EOF' > "$ROFI_THEME_FILE"
+* {
+    bg-col:  #1e1e2eea;
+    bg-col-light: #313244;
+    border-col: #cba6f7;
+    selected-col: #45475a;
+    blue: #89b4fa;
+    fg-col: #cdd6f4;
+    fg-col2: #cba6f7;
+    grey: #6c7086;
+    highlight: bold #cba6f7;
+    width: 760;
+    font: "JetBrainsMono Nerd Font 11";
+}
+element-text, element-icon { background-color: inherit; text-color: inherit; }
+window { height: 520px; border: 2px; border-color: @border-col; border-radius: 12px; background-color: @bg-col; padding: 18px; }
+mainbox { background-color: transparent; }
+inputbar { children: [prompt,entry]; background-color: @bg-col-light; border-radius: 8px; padding: 10px 14px; margin: 0px 0px 14px 0px; border: 1px; border-color: @blue; }
+prompt { background-color: transparent; padding: 0px 10px 0px 0px; text-color: @fg-col2; font: "JetBrainsMono Nerd Font Bold 11"; }
+entry { background-color: transparent; text-color: @fg-col; placeholder: "Type a command or ask LLM directly..."; placeholder-color: @grey; }
+listview { background-color: transparent; columns: 1; lines: 12; spacing: 4px; }
+element { padding: 8px 12px; background-color: transparent; text-color: @fg-col; border-radius: 6px; }
+element selected { background-color: @selected-col; text-color: @fg-col2; border: 1px; border-color: @border-col; }
+EOF
+            cat << 'EOF' > "$KITTY_THEME_FILE"
+# Catppuccin Mocha Palette
+background #1e1e2e
+foreground #cdd6f4
+selection_background #585b70
+selection_foreground #cdd6f4
+cursor #f5e0dc
+color0 #45475a
+color8 #585b70
+color1 #f38ba8
+color9 #f38ba8
+color2 #a6e3a1
+color10 #a6e3a1
+color3 #f9e2af
+color11 #f9e2af
+color4 #89b4fa
+color12 #89b4fa
+color5 #cba6f7
+color13 #cba6f7
+color6 #94e2d5
+color14 #94e2d5
+color7 #bac2de
+color15 #a6adc8
+EOF
+            ;;
+    esac
+
+    # Ensure kitty.conf includes quickfire-colors.conf
+    KITTY_CONF="$HOME/.config/kitty/kitty.conf"
+    if [[ -f "$KITTY_CONF" ]] && ! grep -q "quickfire-colors.conf" "$KITTY_CONF"; then
+        echo -e "\n# Quickfire Theme Colors\ninclude quickfire-colors.conf" >> "$KITTY_CONF"
+    fi
+
+    # Live reload Kitty terminals if any are running
+    pkill -USR1 kitty 2>/dev/null || true
+
+    notify-send -i preferences-desktop-theme "Quickfire Palette" "Switched theme to ${THEME_NAMES[$theme]:-$theme}"
+}
+
+# If a theme name argument was passed directly
+if [[ $# -gt 0 && "${1:-}" != "--menu" ]]; then
+    apply_theme "$1"
+    exit 0
+fi
+
+# Show Interactive Rofi Dropdown Menu
+MENU=""
+for k in "${!THEME_NAMES[@]}"; do
+    MENU+="$k — ${THEME_NAMES[$k]}"$'\n'
+done
+
+SELECTED=$(printf "%s" "$MENU" | sort | rofi -dmenu -i -no-custom -p "Select Theme Palette" -lines 8 -width 50)
+if [[ -n "$SELECTED" ]]; then
+    THEME_KEY="${SELECTED%% —*}"
+    apply_theme "$THEME_KEY"
+fi

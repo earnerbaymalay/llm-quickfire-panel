@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=LLM Quickfire Panel
+Comment=Auto-launch AI Quickfire Command Palette on Desktop Load
+Exec=/home/ebaymlay/.local/bin/quickfire --autostart
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;Development;
+StartupNotify=false
+Hidden=false
+X-GNOME-Autostart-enabled=true

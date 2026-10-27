@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-quickfire-panel"
+version = "1.0.0"
+description = "Fast, keyboard-driven AI Command Center, Local LLM Quickfire HUD & Dynamic Theme Engine for Linux"
+readme = "README.md"
+authors = [{ name = "ebaymlay", email = "ebaymlay@local" }]
+license = { text = "MIT" }
+keywords = ["llm", "ai", "rofi", "command-palette", "endeavouros", "synapseos", "antigravity"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: X11 Applications",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: System :: Shells",
+    "Topic :: Desktop Environment :: Window Managers",
+]
+scripts = { quickfire = "bin/quickfire", quickfire-theme = "bin/quickfire-theme" }
+
+[project.urls]
+Homepage = "https://github.com/earnerbaymalay/llm-quickfire-panel"
+Repository = "https://github.com/earnerbaymalay/llm-quickfire-panel.git"
