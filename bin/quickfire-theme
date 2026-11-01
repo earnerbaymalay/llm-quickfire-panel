@@ -11,7 +11,7 @@ mkdir -p "$THEMES_DIR" "$(dirname "$ROFI_THEME_FILE")" "$(dirname "$KITTY_THEME_
 
 declare -A THEME_NAMES=(
     ["catppuccin-mocha"]="Catppuccin Mocha Mauve (Deep Velvet & Lavender)"
-    ["ps2-cyber-blue"]="PlayStation 2 Cyber Blue (Midnight Navy & Neon Cyan)"
+    ["synapse-sapphire"]="Synapse Sapphire (Deep Obsidian & Sapphire Blue)"
     ["tokyo-night"]="Tokyo Night Storm (Deep Indigo & Electric Magenta)"
     ["nord-frost"]="Nord Frost (Polar Night & Glacial Ice)"
     ["dracula"]="Dracula Dark (Vampire Slate & Neon Pink)"
@@ -25,8 +25,8 @@ apply_theme() {
     echo "$theme" > "$CURRENT_THEME_FILE"
 
     case "$theme" in
-        ps2-cyber-blue)
-            # PS2 Cyber Blue: Midnight Navy (#00091a), Electric Cyan (#00f0ff), Neon Blue (#1a75ff), Gold (#ffd700)
+        synapse-sapphire)
+            # Synapse Sapphire: Deep Obsidian (#11111b), Sapphire (#74c7ec), Liquid Silver (#cdd6f4)
             cat << 'EOF' > "$ROFI_THEME_FILE"
 * {
     bg-col:  #00091ae8;
